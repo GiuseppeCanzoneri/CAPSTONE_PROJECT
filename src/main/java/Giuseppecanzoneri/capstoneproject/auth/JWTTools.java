@@ -1,9 +1,9 @@
-package epicenergyservice.u2bw.auth;
+package Giuseppecanzoneri.capstoneproject.auth;
 
 
 
+import Giuseppecanzoneri.capstoneproject.Users.User;
 import epicenergyservice.u2bw.exceptions.UnauthorizedException;
-import epicenergyservice.u2bw.utenti.Utente;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -31,7 +31,7 @@ public class JWTTools {
         expiration = Integer.parseInt(expirationInDays) * 24 * 60 * 60 * 1000;
     }
 
-    static public String createToken(Utente u) {
+    static public String createToken(User u) {
         String token = Jwts.builder().setSubject(u.getUsername()).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(Keys.hmacShaKeyFor(secret.getBytes())).compact();

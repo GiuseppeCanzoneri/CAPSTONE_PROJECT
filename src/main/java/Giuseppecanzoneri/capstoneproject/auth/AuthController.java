@@ -1,13 +1,13 @@
-package epicenergyservice.u2bw.auth;
+package Giuseppecanzoneri.capstoneproject.auth;
 
 
+import Giuseppecanzoneri.capstoneproject.Users.User;
+import Giuseppecanzoneri.capstoneproject.Users.service.UserService;
+import Giuseppecanzoneri.capstoneproject.Users.payload.UserLoginPayload;
+import Giuseppecanzoneri.capstoneproject.Users.payload.UserRegistrationPayload;
 import epicenergyservice.u2bw.auth.payloads.AuthenticationSuccessfullPayload;
 import epicenergyservice.u2bw.exceptions.NotFoundException;
 import epicenergyservice.u2bw.exceptions.UnauthorizedException;
-import epicenergyservice.u2bw.utenti.Utente;
-import epicenergyservice.u2bw.utenti.services.UtenteService;
-import epicenergyservice.u2bw.utenti.payloads.UtenteCreatePayload;
-import epicenergyservice.u2bw.utenti.payloads.UtenteLoginPayload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,30 +23,30 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    UtenteService utenteService;
+    UserService userService;
     @Autowired
     private PasswordEncoder bcrypt;
 
     @PostMapping("/register")
-    public ResponseEntity<Utente> register(@RequestBody @Validated UtenteCreatePayload body) {
+    public ResponseEntity<User> register(@RequestBody @Validated UserRegistrationPayload body) {
 
         body.setPassword(bcrypt.encode(body.getPassword()));
-        Utente createdUser = utenteService.create(body);
+        User createdUser = userService.create(body);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationSuccessfullPayload> login(@RequestBody UtenteLoginPayload body)
+    public ResponseEntity<AuthenticationSuccessfullPayload> login(@RequestBody UserLoginPayload body)
             throws NotFoundException {
 
-        Utente utente = utenteService.findByUserName(body.getUsername());
+        User user = userService.findByUserName(body.getUsername());
 
         String plainPW = body.getPassword();
-        String hashedPW = utente.getPassword();
+        String hashedPW = user.getPassword();
 
         if (!bcrypt.matches(plainPW, hashedPW))
             throw new UnauthorizedException("Credenziali non valide");
 
-        String token = JWTTools.createToken(utente);
+        String token = JWTTools.createToken(user);
         return new ResponseEntity<>(new AuthenticationSuccessfullPayload(token), HttpStatus.OK);
     }
 

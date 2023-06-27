@@ -1,12 +1,12 @@
-package epicenergyservice.u2bw.auth;
+package Giuseppecanzoneri.capstoneproject.auth;
 
 
 
 
+import Giuseppecanzoneri.capstoneproject.Users.User;
+import Giuseppecanzoneri.capstoneproject.Users.service.UserService;
 import epicenergyservice.u2bw.exceptions.NotFoundException;
 import epicenergyservice.u2bw.exceptions.UnauthorizedException;
-import epicenergyservice.u2bw.utenti.Utente;
-import epicenergyservice.u2bw.utenti.services.UtenteService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +24,7 @@ import java.io.IOException;
 @Component
 public class JWTAuthFilter extends OncePerRequestFilter {
     @Autowired
-    UtenteService utenteService;
+    UserService userService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -40,7 +40,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
         String username = JWTTools.extractSubject(accessToken);
         try {
-            Utente user = utenteService.findByUserName(username);
+           User user = userService.findByUserName(username);
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user, null,
                     user.getAuthorities());

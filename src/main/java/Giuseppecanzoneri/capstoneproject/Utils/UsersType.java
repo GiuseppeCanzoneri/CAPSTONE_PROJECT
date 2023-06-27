@@ -1,4 +1,5 @@
 package Giuseppecanzoneri.capstoneproject.Utils;
 
-public class UsersType {
+public enum UsersType {
+ USER,ADMIN
 }
