@@ -3,7 +3,7 @@ package Giuseppecanzoneri.capstoneproject.auth;
 
 
 import Giuseppecanzoneri.capstoneproject.Users.User;
-import epicenergyservice.u2bw.exceptions.UnauthorizedException;
+import Giuseppecanzoneri.capstoneproject.exceptions.UnauthorizedException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;

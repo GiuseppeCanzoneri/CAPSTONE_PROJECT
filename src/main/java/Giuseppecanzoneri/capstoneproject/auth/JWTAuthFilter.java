@@ -5,8 +5,8 @@ package Giuseppecanzoneri.capstoneproject.auth;
 
 import Giuseppecanzoneri.capstoneproject.Users.User;
 import Giuseppecanzoneri.capstoneproject.Users.service.UserService;
-import epicenergyservice.u2bw.exceptions.NotFoundException;
-import epicenergyservice.u2bw.exceptions.UnauthorizedException;
+import Giuseppecanzoneri.capstoneproject.exceptions.NotFoundException;
+import Giuseppecanzoneri.capstoneproject.exceptions.UnauthorizedException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +40,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
         String username = JWTTools.extractSubject(accessToken);
         try {
-           User user = userService.findByUserName(username);
+           User user = userService.findUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(user, null,
                     user.getAuthorities());

@@ -1,4 +1,4 @@
-package epicenergyservice.u2bw.auth.payloads;
+package Giuseppecanzoneri.capstoneproject.auth.payloads;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

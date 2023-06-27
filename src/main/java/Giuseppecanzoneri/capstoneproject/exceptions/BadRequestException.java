@@ -1,5 +1,4 @@
-package epicenergyservice.u2bw.exceptions;
-
+package Giuseppecanzoneri.capstoneproject.exceptions;
 public class BadRequestException extends RuntimeException {
     public BadRequestException(String message) {
         super(message);
