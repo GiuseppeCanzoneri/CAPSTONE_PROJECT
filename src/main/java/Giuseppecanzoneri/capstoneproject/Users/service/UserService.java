@@ -6,24 +6,25 @@ import Giuseppecanzoneri.capstoneproject.Users.repository.UserRepository;
 import Giuseppecanzoneri.capstoneproject.exceptions.BadRequestException;
 import Giuseppecanzoneri.capstoneproject.exceptions.NotFoundException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
 public class UserService {
-
-    private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+@Autowired
+PasswordEncoder bCrypt;
+@Autowired
+    private  UserRepository userRepository;
 
     public Page<User> findAllUsers(int page, int size, String sortBy) {
         if (size < 0)
@@ -65,7 +66,7 @@ public class UserService {
         foundUser.setCognome(payload.getCognome());
         foundUser.setUsername(payload.getUsername());
         foundUser.setEmail(payload.getEmail());
-        foundUser.setPassword(payload.getPassword());
+        foundUser.setPassword (bCrypt.encode(payload.getPassword()));
         return userRepository.save(foundUser);
     }
 

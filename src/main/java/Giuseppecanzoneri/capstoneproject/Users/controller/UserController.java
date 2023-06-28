@@ -25,11 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
-@PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
+
 public class UserController {
     @Autowired
     private UserService userService;
-
+    @PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public User saveUser(@RequestBody @Validated UserRegistrationPayload body) {
@@ -46,7 +46,7 @@ public class UserController {
     public User getUserById(@PathVariable UUID userId) throws NotFoundException {
         return userService.findUserById(userId);
     }
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @PutMapping("/{userId}")
     public User updateUser(@PathVariable UUID userId, @RequestBody UserRegistrationPayload body)
             throws NotFoundException {
