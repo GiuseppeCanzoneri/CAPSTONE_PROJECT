@@ -26,8 +26,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties({ "password" })
 public class User implements UserDetails {
     @Id
-    @GeneratedValue
-    private UUID idUser;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID UserId;
     private String nome;
     private String cognome;
     private String username;
@@ -49,10 +49,12 @@ public class User implements UserDetails {
         this.role = UserType.USER;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
+
 
     public String getEmailFromUsername() {
         return this.email;

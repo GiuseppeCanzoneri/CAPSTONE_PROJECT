@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DestinationRepository extends JpaRepository<Destination, UUID> {
-    Optional<Destination> findByIdAndUser_Id(UUID destinationId, UUID userId);
+//    Optional<Destination> findByDestinationIdAndUser_UserId(UUID destinationId, UUID UserId);
+
 }

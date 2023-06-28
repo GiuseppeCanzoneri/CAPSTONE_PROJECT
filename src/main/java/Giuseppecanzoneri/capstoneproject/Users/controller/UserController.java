@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/users")
+@PreAuthorize("hasAuthority('ADMIN') || hasAuthority('USER')")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -44,13 +46,12 @@ public class UserController {
     public User getUserById(@PathVariable UUID userId) throws NotFoundException {
         return userService.findUserById(userId);
     }
-
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/{userId}")
     public User updateUser(@PathVariable UUID userId, @RequestBody UserRegistrationPayload body)
             throws NotFoundException {
         return userService.findUserByIdAndUpdate(userId, body);
     }
-
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable UUID userId) throws NotFoundException {

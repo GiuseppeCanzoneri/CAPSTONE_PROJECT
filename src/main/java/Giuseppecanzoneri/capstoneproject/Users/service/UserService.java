@@ -43,7 +43,7 @@ public class UserService {
         }
 
         userRepository.findByEmail(email).ifPresent(user -> {
-            throw new NotFoundException("Utente non trovato con ID: " + user.getIdUser());
+            throw new NotFoundException("Utente non trovato con ID: " + user.getUserId());
         });
 
         User newUser = new User(payload.getNome(), payload.getCognome(), payload.getUsername(), email, payload.getPassword());
@@ -60,9 +60,12 @@ public class UserService {
 
     public User findUserByIdAndUpdate(UUID id, UserRegistrationPayload payload) throws NotFoundException {
         User foundUser = findUserById(id);
-        foundUser.setIdUser(id);
+        foundUser.setUserId(id);
+        foundUser.setNome(payload.getNome());
+        foundUser.setCognome(payload.getCognome());
         foundUser.setUsername(payload.getUsername());
         foundUser.setEmail(payload.getEmail());
+        foundUser.setPassword(payload.getPassword());
         return userRepository.save(foundUser);
     }
 
