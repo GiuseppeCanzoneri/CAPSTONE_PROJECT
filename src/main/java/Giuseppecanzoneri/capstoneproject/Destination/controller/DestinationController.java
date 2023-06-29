@@ -8,6 +8,7 @@ import Giuseppecanzoneri.capstoneproject.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class DestinationController {
     @Autowired
     private UserService userService;
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public Destination saveDestination(@RequestBody @Validated DestinationCreatePayload body) {
@@ -33,25 +35,26 @@ public class DestinationController {
         return destinationService.createDestination(body, currentUser);
     }
 
-
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @GetMapping("")
     public Page<Destination> getDestinations(@RequestParam(defaultValue = "0") int page,
                                              @RequestParam(defaultValue = "10") int size,
                                              @RequestParam(defaultValue = "id") String sortBy) {
         return destinationService.findAllDestinations(page, size, sortBy);
     }
-
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @GetMapping("/{destinationId}")
     public Destination getDestinationById(@PathVariable UUID destinationId) throws NotFoundException {
         return destinationService.findDestinationById(destinationId);
     }
 
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @PutMapping("/{destinationId}")
     public Destination updateDestination(@PathVariable UUID destinationId, @RequestBody DestinationCreatePayload body)
             throws NotFoundException {
         return destinationService.findDestinationByIdAndUpdate(destinationId, body);
     }
-
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @DeleteMapping("/{destinationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteDestination(@PathVariable UUID destinationId) throws NotFoundException {
