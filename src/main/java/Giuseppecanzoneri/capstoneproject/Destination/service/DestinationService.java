@@ -39,7 +39,7 @@ public class DestinationService {
     }
 
     public Destination createDestination(DestinationCreatePayload payload, User user) {
-        Destination destination = new Destination(payload.getName(), payload.getDescription(), user);
+        Destination destination = new Destination(payload.getName(), payload.getUrlCopertina(), payload.getDescription(), user);
         return destinationRepository.save(destination);
     }
 
@@ -54,6 +54,7 @@ public class DestinationService {
         Destination destination = findDestinationById(destinationId);
         destination.setName(payload.getName());
         destination.setDescription(payload.getDescription());
+        destination.setUrlCopertina(payload.getUrlCopertina());
         return destinationRepository.save(destination);
     }
 
