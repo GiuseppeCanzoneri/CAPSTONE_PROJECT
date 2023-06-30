@@ -1,78 +1,129 @@
 package Giuseppecanzoneri.capstoneproject;
 
-
-
 import Giuseppecanzoneri.capstoneproject.Destination.Destination;
 import Giuseppecanzoneri.capstoneproject.Destination.repositories.DestinationRepository;
+import Giuseppecanzoneri.capstoneproject.Users.User;
+import Giuseppecanzoneri.capstoneproject.Users.repository.UserRepository;
+import Giuseppecanzoneri.capstoneproject.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-
 @Component
 public class DestinationRunner implements CommandLineRunner {
     @Autowired
-    DestinationRepository destinationRepo;
+    private DestinationRepository destinationRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        List<Destination> destinationDB = destinationRepo.findAll();
-        if (destinationDB.size() == 0) {
-            Destination film1 = new Destination("Roma", "Day1:Giro in barca," +
-                    "Day2:giro in gondola" +
-                    "day3:halo","https://i.imgur.com/ydO73kB.jpg" );
+        List<Destination> destinationDB = destinationRepository.findAll();
+        if (destinationDB.isEmpty()) {
+            User currentUser = userRepository.findByUsername("Giuseppe23")
+                    .orElseThrow(() -> new NotFoundException("Utente non trovato"));
 
-//            Destination film2 = new Destination("Super Mario Bros", "https://i.imgur.com/gGmic94.jpg", Categoria.ANIMAZIONE,
-//                    "Super Mario, il famoso idraulico, e Luigi si ritrovano in un mondo magico. Luigi viene rapito da Bowser, mentre Mario cerca di salvarlo. Il film animato offre una narrazione piatta ma con elementi tecnici di qualità, presentando una principessa Peach attiva e un Luigi con un percorso formativo diverso. Mario rappresenta le insicurezze sociali contemporanee.",
-//                    "3.5/5", "1h 32m", "2023");
-//
-//            Destination film3 = new Destination("John Wick 4", "https://i.imgur.com/6Q12zQQ.jpg", Categoria.AZIONE,
-//                    "John Wick, l'implacabile assassino, torna per vendicarsi della Gran Tavola della fantamafia. Senza una trama definita, il film si basa su lotte spettacolari e adrenalina costante. Il regista Chad Stahelski celebra gli stuntman e crea un'epica contemporanea senza compromessi. Una saga che consacra Stahelski come autore nel genere d'azione.",
-//                    "4.5/5", "2h 49m", "2023");
-//
-//            Destination film4 = new Destination("Star Wars: L'attacco dei cloni", "https://i.imgur.com/karn0mi.jpg",
-//                    Categoria.FANTASCIENZA,
-//                    "In Star Wars: L'attacco dei cloni, il secondo capitolo della trilogia prequel, l'Ordine dei Jedi affronta una crescente minaccia separatista. Obi-Wan Kenobi e Anakin Skywalker sono inviati in una missione per proteggere la senatrice Padmé Amidala e scoprire l'origine dell'esercito di cloni. Nel frattempo, Anakin si innamora di Padmé e affronta le tentazioni del lato oscuro della Forza. La trama si sviluppa con intrighi politici, battaglie intergalattiche e il misterioso piano del Signore Oscuro dei Sith, Darth Sidious.",
-//                    "2.6/5", "2h 22m", "2002");
-//
-//            Destination film5 = new Destination("Lo hobbit: Un viaggio inaspettato", "https://i.imgur.com/FFcoNKl.jpg",
-//                    Categoria.FANTASY,
-//                    "Lo Hobbit: Un viaggio inaspettato è un avventuroso film fantasy. Bilbo Baggins viene coinvolto da Gandalf il Grigio in una missione per recuperare il Regno dei Nani di Erebor. Unendosi a una compagnia di tredici nani guidata da Thorin Scudodiquercia, affrontano pericoli, creature malvagie e un incontro inaspettato con Gollum, nel tentativo di reclamare il tesoro nascosto e sconfiggere il terribile drago Smaug.",
-//                    "3/5", "2h 49m", "2012");
-//
-//            Destination film6 = new Destination("Tolo Tolo", "https://i.imgur.com/jmPMWgD.jpg", Categoria.COMMEDIA,
-//                    "Checco Zalone interpreta Pieraccioni, un giovane italiano che emigra in Africa per cercare lavoro, sperando di migliorare la sua vita. Tuttavia, si trova coinvolto in una serie di situazioni comiche e imbarazzanti, mentre cerca disperatamente di adattarsi alla cultura e alle tradizioni locali. Un viaggio che gli permetterà di confrontarsi con se stesso e di scoprire il vero significato della felicità.",
-//                    "3.5/5", "1h 43m", "2020");
-//
-//            Destination film7 = new Destination("Shazam!", "https://i.imgur.com/9Bheuav.jpg", Categoria.AZIONE,
-//                    "Thaddeus, trascurato dalla famiglia, viene provato dal mago Shazam, ma soccombe alle tentazioni. Anni dopo, ottiene poteri oscuri, mentre il mago trova un nuovo campione virtuoso. Quando Thaddeus pronuncia \"Shazam!\", diventa un eroe pronto a combattere per il mondo.",
-//                    "3/5", "2h 12m", "2019");
-//
-//            Destination film8 = new Destination("Luca", "https://i.imgur.com/0bADGjF.jpg", Categoria.ANIMAZIONE,
-//                    "Luca, una creatura marina dedita alla pastorizia subacquea, incontra un suo simile, Alberto, insieme al quale, sotto sembianze umane, si avventura verso Portorosso, un villaggio di pescatori della riviera ligure. L’incontro con Giulietta e la partecipazione ad una gara mette a repentaglio il loro segreto.",
-//                    "4.5/5", "1h 35m", "2021");
-//
-//            Destination film9 = new Destination("Shutter Island", "https://i.imgur.com/aHpHA72.jpg", Categoria.THRILLER,
-//                    "1954. L’agente federale Teddy Daniels si reca a Shutter Island, al largo di Boston, dove si trova l’Ashecliffe Hospital, un manicomio criminale. Deve ritrovare una detenuta scomparsa, Rachel Salando. Un uragano si abbatte sull’isola…",
-//                    "3/5", "2h 18m", "2010");
-//
-//            Destination film10 = new Destination("Creed 3", "https://i.imgur.com/pjMcwyY.jpg", Categoria.DRAMMATICO,
-//                    "Adonis Creed sta prosperando nella sua carriera e nella sua vita familiare. Quando un amico d’infanzia ed ex prodigio del pugilato ricompare dopo aver scontato la pena in carcere, ansioso di dimostrare di meritare la sua occasione sul ring, la situazione sfuggirà presto di mano…",
-//                    "2.5/5", "1h 56m", "2023");
-            destinationRepo.save(film1);
-//            destinationRepo.save(film2);
-//            destinationRepo.save(film3);
-//            destinationRepo.save(film4);
-//            destinationRepo.save(film5);
-//            destinationRepo.save(film6);
-//            destinationRepo.save(film7);
-//            destinationRepo.save(film8);
-//            destinationRepo.save(film9);
-//            destinationRepo.save(film10);
+            createDestination(currentUser, "Roma",
+                    "GIORNO 1 "+"Mattina: Visita al Colosseo" +
+                    "Pomeriggio: Esplorazione del Foro Romano" +
+                    "Sera: Passeggiata serale a Trastevere" +
+                    "Giorno 2:" +
+                    "Mattina: Visita ai Musei Vaticani e alla Cappella Sistina" +
+                    "Pomeriggio: Esplorazione di San Pietro e la Basilica di San Pietro" +
+                    "Sera: Cena in un ristorante tipico romano" +
+                    "Giorno 3:" +
+                    "Mattina: Esplorazione di Villa Borghese e visita alla Galleria Borghese" +
+                    "Pomeriggio: Visita alla Fontana di Trevi e al Pantheon" +
+                    "Sera: Passeggiata serale lungo il Lungotevere" +
+                    "Giorno 4:" +
+                    "Mattina: Visita al Mercato di Campo de' Fiori e degustazione di prodotti locali" +
+                    "Pomeriggio: Esplorazione di Piazza Navona e dei suoi caffè" +
+                    "Sera: Spettacolo di opera o musica classica all'Opera di Roma" +
+                    "Giorno 5:" +
+                    "Mattina: Escursione al Vaticano e visita ai Giardini Vaticani" +
+                    "Pomeriggio: Esplorazione di Castel Sant'Angelo e del Ponte Sant'Angelo" +
+                    "Sera: Cena in un ristorante panoramico con vista sulla città" +
+                    "Giorno 6:"+
+                    "Mattina: Visita al Quartiere dell'EUR e al Museo della Civiltà Romana" +
+                    "Pomeriggio: Esplorazione del quartiere Trionfale e shopping in Via Cola di Rienzo" +
+                    "Sera: Passeggiata lungo il Lungomare di Ostia e cena in un ristorante di pesce" +
+                    "Giorno 7:"+
+                    "Mattina: Escursione a Villa d'Este a Tivoli" +
+                    "Pomeriggio: Visita a Villa Adriana a Tivoli" +
+                    "Sera: Serata di relax e cena in un ristorante tradizionale romano", "https://i.imgur.com/5SFKsao.jpeg");
+
+
+
+            createDestination(currentUser, "Parigi", "Giorno 1:" +
+                    "Mattina: Visita alla Torre Eiffel" +
+                    "Pomeriggio: Esplorazione del Museo del Louvre" +
+                    "Sera: Crociera sulla Senna al tramonto" +
+                    "Giorno 2:" +
+                    "Mattina: Visita alla Cattedrale di Notre-Dame" +
+                    "Pomeriggio: Esplorazione del quartiere di Montmartre e della Basilica del Sacré-Cœur" +
+                    "Sera: Spettacolo di cabaret al Moulin Rouge" +
+                    "Giorno 3:" +
+                    "Mattina: Visita al Palazzo di Versailles" +
+                    "Pomeriggio: Esplorazione del quartiere di Saint-Germain-des-Prés" +
+                    "Sera: Cena in un ristorante gastronomico parigino" +
+                    "Giorno 4:" +
+                    "Mattina: Visita al Museo d'Orsay" +
+                    "Pomeriggio: Esplorazione dei Giardini di Lussemburgo" +
+                    "Sera: Passeggiata lungo la Senna e ammirare l'illuminazione dei monumenti" +
+                    "Giorno 5:" +
+                    "Mattina: Visita alla Cattedrale di Sainte-Chapelle e alla Conciergerie" +
+                    "Pomeriggio: Esplorazione del quartiere di Le Marais" +
+                    "Sera: Cena in un bistro parigino tradizionale" +
+                    "Giorno 6:" +
+                    "Mattina: Visita al Museo dell'Orangerie" +
+                    "Pomeriggio: Esplorazione del Quartiere Latino e del Pantheon" +
+                    "Sera: Spettacolo al Teatro dell'Opera di Parigi" +
+                    "Giorno 7:" +
+                    "Mattina: Escursione al Museo dell'Orangerie e visita ai giardini di Tuileries" +
+                    "Pomeriggio: Esplorazione di Montparnasse e salita sulla Torre Montparnasse per una vista panoramica" +
+                    "Sera: Crociera notturna sulla Senna con cena a bordo", "https://i.imgur.com/BSRjxpM.jpeg");
+
+
+
+            createDestination(currentUser, "Londra", "Giorno 1:" +
+                    "Mattina: Visita alla Torre di Londra e alle Crown Jewels" +
+                    "Pomeriggio: Esplorazione del Tower Bridge e passeggiata lungo il Tamigi" +
+                    "Sera: Spettacolo teatrale nel West End" +
+                    "Giorno 2:" +
+                    "Mattina: Visita al British Museum" +
+                    "Pomeriggio: Esplorazione di Covent Garden e del mercato di Camden" +
+                    "Sera: Cena in un pub tradizionale londinese" +
+                    "Giorno 3:" +
+                    "Mattina: Visita al Palazzo di Buckingham e al cambio della guardia" +
+                    "Pomeriggio: Esplorazione di Hyde Park e Kensington Gardens" +
+                    "Sera: Passeggiata lungo South Bank e ammirare la vista sul London Eye" +
+                    "Giorno 4:" +
+                    "Mattina: Visita alla Cattedrale di San Paolo" +
+                    "Pomeriggio: Esplorazione di Notting Hill e del mercato di Portobello Road" +
+                    "Sera: Cena in un ristorante sulla riva del fiume con vista sulla City di Londra" +
+                    "Giorno 5:" +
+                    "Mattina: Visita al Museo di Storia Naturale" +
+                    "Pomeriggio: Esplorazione di Camden Town e del canale di Little Venice" +
+                    "Sera: Esplorazione del quartiere di Soho e cena in un ristorante etnico" +
+                    "Giorno 6:" +
+                    "Mattina: Visita alla National Gallery" +
+                    "Pomeriggio: Esplorazione di Greenwich e visita al Royal Observatory" +
+                    "Sera: Crociera sul Tamigi al tramonto" +
+                    "Giorno 7:" +
+                    "Mattina: Visita alla Westminster Abbey" +
+                    "Pomeriggio: Esplorazione del quartiere di Shoreditch e del mercato di Brick Lane" +
+                    "Sera: Spettacolo musicale o concerto in una delle famose sale da concerto di Londra", "https://i.imgur.com/KaMzN9X.jpeg");
+            // Aggiungi altre destinazioni con le rispettive attività e immagini di copertina
 
         }
     }
 
+    private void createDestination(User user, String name, String activities, String coverImageURL) {
+        Destination destination = new Destination(name, activities, coverImageURL);
+        destination.setUser(user);
+        destinationRepository.save(destination);
+    }
 }

@@ -1,13 +1,10 @@
 package Giuseppecanzoneri.capstoneproject.Destination;
 
-
 import Giuseppecanzoneri.capstoneproject.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.UUID;
 
@@ -20,18 +17,20 @@ public class Destination {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID destinationId;
     private String name;
+
+    @Column(length = 5000)
     private String description;
-    private String UrlCopertina;
+
+    private String urlCopertina;
 
     @JsonIgnore
-    @ManyToOne (fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    public Destination(String name, String description,String UrlCopertina) {
+    public Destination(String name, String description, String urlCopertina) {
         this.name = name;
         this.description = description;
-        this.UrlCopertina= UrlCopertina;
-//        this.user = user;
+        this.urlCopertina = urlCopertina;
     }
 }

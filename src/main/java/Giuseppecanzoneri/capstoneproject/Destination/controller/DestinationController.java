@@ -31,9 +31,10 @@ public class DestinationController {
     @PostMapping("")
     @ResponseStatus(HttpStatus.CREATED)
     public Destination saveDestination(@RequestBody @Validated DestinationCreatePayload body) {
-        User currentUser = userService.getCurrentUser(); // Ottieni l'utente corrente
-        return destinationService.createDestination(body, currentUser);
+        UUID userId = userService.getCurrentUser().getUserId(); // Ottenere l'ID dell'utente corrente
+        return destinationService.createDestination(body, userId);
     }
+
 
     @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     @GetMapping("")
@@ -52,8 +53,10 @@ public class DestinationController {
     @PutMapping("/{destinationId}")
     public Destination updateDestination(@PathVariable UUID destinationId, @RequestBody DestinationCreatePayload body)
             throws NotFoundException {
-        return destinationService.findDestinationByIdAndUpdate(destinationId, body);
+        UUID userId = userService.getCurrentUser().getUserId();
+        return destinationService.findDestinationByIdAndUpdate(destinationId, body, userId);
     }
+
     @PreAuthorize("hasAnyAuthority('ADMIN')")
     @DeleteMapping("/{destinationId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

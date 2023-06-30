@@ -38,8 +38,11 @@ public class DestinationService {
         return destinationRepository.findAll(pageable);
     }
 
-    public Destination createDestination(DestinationCreatePayload payload, User user) {
-        Destination destination = new Destination(payload.getName(), payload.getUrlCopertina(), payload.getDescription(), user);
+    public Destination createDestination(DestinationCreatePayload payload, UUID userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Utente non trovato con ID: " + userId));
+        Destination destination = new Destination(payload.getName(), payload.getDescription(), payload.getUrlCopertina());
+        destination.setUser(user);
         return destinationRepository.save(destination);
     }
 
@@ -49,12 +52,15 @@ public class DestinationService {
                 .orElseThrow(() -> new NotFoundException("Destination not found with ID: " + destinationId));
     }
 
-    public Destination findDestinationByIdAndUpdate(UUID destinationId, DestinationCreatePayload payload)
+    public Destination findDestinationByIdAndUpdate(UUID destinationId, DestinationCreatePayload payload, UUID userId)
             throws NotFoundException {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new NotFoundException("Utente non trovato con ID: " + userId));
         Destination destination = findDestinationById(destinationId);
         destination.setName(payload.getName());
         destination.setDescription(payload.getDescription());
         destination.setUrlCopertina(payload.getUrlCopertina());
+        destination.setUser(user);
         return destinationRepository.save(destination);
     }
 
