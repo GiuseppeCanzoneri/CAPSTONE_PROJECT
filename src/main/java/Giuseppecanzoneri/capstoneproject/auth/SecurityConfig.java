@@ -20,6 +20,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
     @Autowired
     JWTAuthFilter jwtAuthFilter;
+
+    @Autowired
+    CorsFilter corsFilter;
     @Autowired
     ExceptionHandlerFilter exceptionHandlerFilter;
 
@@ -34,6 +37,8 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth.requestMatchers("/usertype/**").authenticated());
 
         http.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(corsFilter, JWTAuthFilter.class);
+
 
         http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

@@ -47,6 +47,7 @@ public class AuthController {
             throw new UnauthorizedException("Credenziali non valide");
 
         String token = JWTTools.createToken(user);
+
         return new ResponseEntity<>(new AuthenticationSuccessfullPayload(token), HttpStatus.OK);
     }
 
