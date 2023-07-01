@@ -21,9 +21,9 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-@Autowired
-PasswordEncoder bCrypt;
-@Autowired
+    @Autowired
+    PasswordEncoder bCrypt;
+    @Autowired
     private  UserRepository userRepository;
 
     public Page<User> findAllUsers(int page, int size, String sortBy) {

@@ -1,9 +1,6 @@
 package Giuseppecanzoneri.capstoneproject.Users;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import Giuseppecanzoneri.capstoneproject.Destination.Destination;
 import Giuseppecanzoneri.capstoneproject.Users.utils.UserType;
@@ -39,6 +36,7 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Destination> destinations;
+//    private List<Destination> preferiti;
 
     public User(String nome, String cognome, String username, String email, String password) {
         this.nome = nome;
@@ -47,9 +45,18 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.role = UserType.USER;
+//        this.preferiti = new ArrayList<>();
     }
 
-
+//    public void addDestination(Destination destination) {
+//        preferiti.add(destination);
+//        destination.getUser().add(this);
+//    }
+//
+//    public void removeDestination(Destination destination) {
+//        preferiti.remove(destination);
+//        destination.getUser().remove(this);
+//    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
