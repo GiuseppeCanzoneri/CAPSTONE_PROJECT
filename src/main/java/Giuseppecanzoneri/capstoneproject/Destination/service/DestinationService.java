@@ -3,11 +3,11 @@ package Giuseppecanzoneri.capstoneproject.Destination.service;
 
 
 
+import java.util.UUID;
 
+import Giuseppecanzoneri.capstoneproject.Destination.Destination;
 import Giuseppecanzoneri.capstoneproject.Destination.payload.DestinationCreatePayload;
 import Giuseppecanzoneri.capstoneproject.Destination.repositories.DestinationRepository;
-import Giuseppecanzoneri.capstoneproject.Users.User;
-import Giuseppecanzoneri.capstoneproject.Users.repository.UserRepository;
 import Giuseppecanzoneri.capstoneproject.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,59 +16,50 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import Giuseppecanzoneri.capstoneproject.Destination.Destination;
 
-
-
-import java.util.UUID;
 
 @Service
 public class DestinationService {
     @Autowired
-    private DestinationRepository destinationRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private DestinationRepository destinationRepo;
 
-    public Page<Destination> findAllDestinations(int page, int size, String sortBy) {
+    public Page<Destination> find(int page, int size, String sortBy, String nome) {
         if (size < 0)
             size = 10;
         if (size > 100)
-            size = 20;
+            size = 100;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        return destinationRepository.findAll(pageable);
+        if (!nome.equals("")) {
+            return destinationRepo.findByNome(nome, pageable);
+        } else {
+            return destinationRepo.findAll(pageable);
+        }
     }
 
-    public Destination createDestination(DestinationCreatePayload payload, UUID userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Utente non trovato con ID: " + userId));
-        Destination destination = new Destination(payload.getName(), payload.getDescription(), payload.getUrlCopertina());
-        destination.setUser(user);
-        return destinationRepository.save(destination);
+    public Destination findById(UUID id) throws NotFoundException {
+        return destinationRepo.findById(id).orElseThrow(() -> new NotFoundException("Film non trovato!"));
+
     }
 
+    public Destination create(DestinationCreatePayload u) {
 
-    public Destination findDestinationById(UUID destinationId) throws NotFoundException {
-        return destinationRepository.findById(destinationId)
-                .orElseThrow(() -> new NotFoundException("Destination not found with ID: " + destinationId));
+        Destination newDestination = new Destination(u.getName(),u.getDescription(),u.getUrlCopertina());
+        return destinationRepo.save(newDestination);
     }
 
-    public Destination findDestinationByIdAndUpdate(UUID destinationId, DestinationCreatePayload payload, UUID userId)
-            throws NotFoundException {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException("Utente non trovato con ID: " + userId));
-        Destination destination = findDestinationById(destinationId);
-        destination.setName(payload.getName());
-        destination.setDescription(payload.getDescription());
-        destination.setUrlCopertina(payload.getUrlCopertina());
-        destination.setUser(user);
-        return destinationRepository.save(destination);
+    public Destination findByIdAndUpdate(UUID id, DestinationCreatePayload d) {
+        Destination found = this.findById(id);
+        found.setDestinationId(id);
+        found.setName(d.getName());
+        found.setDescription(found.getDescription());
+        found.setUrlCopertina(d.getUrlCopertina());;
+        found.setUsers(found.getUsers());
+        return destinationRepo.save(found);
+
     }
 
-    public void findDestinationByIdAndDelete(UUID destinationId) throws NotFoundException {
-        Destination destination = findDestinationById(destinationId);
-        destinationRepository.delete(destination);
+    public void findByIdAndDelete(UUID id) throws NotFoundException {
+        Destination found = this.findById(id);
+        destinationRepo.delete(found);
     }
-
-
-
 }

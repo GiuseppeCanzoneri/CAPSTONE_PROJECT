@@ -1,15 +1,26 @@
+// Destination.java
+
 package Giuseppecanzoneri.capstoneproject.Destination;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 import Giuseppecanzoneri.capstoneproject.Users.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+
+
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.UUID;
-
+@Getter
+@Setter
 @Entity
-@Table(name = "Destinations")
+@Table(name = "destinations")
 @Data
 @NoArgsConstructor
 public class Destination {
@@ -23,14 +34,14 @@ public class Destination {
 
     private String urlCopertina;
 
+    @ManyToMany(mappedBy = "preferiti")
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private List<User> users;
 
     public Destination(String name, String description, String urlCopertina) {
         this.name = name;
         this.description = description;
         this.urlCopertina = urlCopertina;
+        this.users = new ArrayList<>();
     }
 }

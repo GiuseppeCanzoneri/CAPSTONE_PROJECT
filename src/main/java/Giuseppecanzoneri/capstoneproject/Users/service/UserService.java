@@ -47,7 +47,7 @@ public class UserService {
             throw new NotFoundException("Utente non trovato con ID: " + user.getUserId());
         });
 
-        User newUser = new User(payload.getNome(), payload.getCognome(), payload.getUsername(), email, payload.getPassword());
+        User newUser = new User( payload.getUsername(), email, payload.getPassword(), payload.getNome(), payload.getCognome());
         return userRepository.save(newUser);
     }
 
@@ -62,11 +62,12 @@ public class UserService {
     public User findUserByIdAndUpdate(UUID id, UserRegistrationPayload payload) throws NotFoundException {
         User foundUser = findUserById(id);
         foundUser.setUserId(id);
-        foundUser.setNome(payload.getNome());
-        foundUser.setCognome(payload.getCognome());
         foundUser.setUsername(payload.getUsername());
         foundUser.setEmail(payload.getEmail());
         foundUser.setPassword (bCrypt.encode(payload.getPassword()));
+        foundUser.setNome(payload.getNome());
+        foundUser.setCognome(payload.getCognome());
+
         return userRepository.save(foundUser);
     }
 

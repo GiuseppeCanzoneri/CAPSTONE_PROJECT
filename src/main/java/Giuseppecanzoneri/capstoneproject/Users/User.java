@@ -1,70 +1,91 @@
-package Giuseppecanzoneri.capstoneproject.Users;
+// User.java
 
-import java.util.*;
+package Giuseppecanzoneri.capstoneproject.Users;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 import Giuseppecanzoneri.capstoneproject.Destination.Destination;
 import Giuseppecanzoneri.capstoneproject.Users.utils.UserType;
-import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import lombok.Data;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-
-
-@Entity
-@Table(name = "Users")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
-@JsonIgnoreProperties({ "password" })
+@Entity
+@Table(name = "users")
+@JsonIgnoreProperties({ "password", "active", "authorities", "enabled", "credentialsNonExpired", "accountNonExpired",
+        "accountNonLocked" })
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID UserId;
-    private String nome;
-    private String cognome;
+    @GeneratedValue
+    private UUID userId;
     private String username;
     private String email;
     private String password;
-
+    private String nome;
+    private String cognome;
     @Enumerated(EnumType.STRING)
     private UserType role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Destination> destinations;
-//    private List<Destination> preferiti;
+    @ManyToMany
+    @JoinTable(name = "preferiti", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "destination_id"))
+    @JsonManagedReference
+    @JsonIgnoreProperties({"users"})
+    private List<Destination> preferiti;
 
-    public User(String nome, String cognome, String username, String email, String password) {
-        this.nome = nome;
-        this.cognome = cognome;
+    public User(String username, String email, String password, String nome, String cognome) {
+        super();
         this.username = username;
         this.email = email;
         this.password = password;
+        this.nome = nome;
+        this.cognome = cognome;
         this.role = UserType.USER;
-//        this.preferiti = new ArrayList<>();
+        this.preferiti = new ArrayList<>();
     }
 
-//    public void addDestination(Destination destination) {
-//        preferiti.add(destination);
-//        destination.getUser().add(this);
-//    }
-//
-//    public void removeDestination(Destination destination) {
-//        preferiti.remove(destination);
-//        destination.getUser().remove(this);
-//    }
+    public void addDestination(Destination destination) {
+        preferiti.add(destination);
+        destination.getUsers().add(this);
+    }
+
+    public void removeDestination(Destination destination) {
+        preferiti.remove(destination);
+        destination.getUsers().remove(this);
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
 
-    public String getEmailFromUsername() {
-        return this.email;
+    @Override
+    public String getUsername() {
+        return this.username;
     }
 
     @Override
