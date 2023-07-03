@@ -47,7 +47,7 @@ public class User implements UserDetails {
     private UserType role;
 
     @ManyToMany
-    @JoinTable(name = "preferiti", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "id"))
+    @JoinTable(name = "preferiti", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "destination_id"))
     @JsonManagedReference
     @JsonIgnoreProperties({"users"})
     private List<Destination> preferiti;
