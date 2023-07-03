@@ -26,7 +26,7 @@ import lombok.Setter;
 public class Destination {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID destinationId;
+    private UUID id;
     private String name;
 
     @Column(length = 5000)

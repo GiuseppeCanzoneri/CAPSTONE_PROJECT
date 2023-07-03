@@ -18,6 +18,6 @@ public interface DestinationRepository extends JpaRepository<Destination, UUID> 
 
 
     @Query("SELECT d FROM Destination d WHERE LOWER(d.name) LIKE CONCAT('%', LOWER(:name), '%')")
-    Page<Destination> findByNome(String name, Pageable pageable);
+    Page<Destination> findByName(String name, Pageable pageable);
 
 }

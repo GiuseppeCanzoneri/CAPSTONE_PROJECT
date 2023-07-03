@@ -118,7 +118,7 @@ public class DestinationRunner implements CommandLineRunner {
                     "   Pomeriggio: Esplorazione di Belleville e del Parc des Buttes-Chaumont\n" +
                     "   Sera: Spettacolo di luce al Grand Palais";
 
-            Destination destination2 = new Destination("Parigi", itinerary2, "https://i.imgur.com/8nXoA5I.jpeg");
+            Destination destination2 = new Destination("Parigi", itinerary2, "https://i.imgur.com/V8SDnRV.jpeg");
             destinationRepository.save(destination2);
 
 
@@ -186,6 +186,105 @@ public class DestinationRunner implements CommandLineRunner {
 
             Destination destination4 = new Destination("Maldive", itinerary4, "https://i.imgur.com/yh4sQm1.jpeg");
             destinationRepository.save(destination4);
+
+
+
+            String itinerary5 = "Giorno 1:\n" +
+                    "   Mattina: Visita al Tempio di Meiji\n" +
+                    "   Pomeriggio: Esplorazione del quartiere di Harajuku\n" +
+                    "   Sera: Cena di sushi al mercato del pesce di Tsukiji\n" +
+                    "Giorno 2:\n" +
+                    "   Mattina: Visita al Palazzo Imperiale di Tokyo\n" +
+                    "   Pomeriggio: Shopping nel quartiere di Ginza\n" +
+                    "   Sera: Spettacolo di robot al Robot Restaurant di Shinjuku\n" +
+                    "Giorno 3:\n" +
+                    "   Mattina: Escursione al Monte Fuji e al Lago Kawaguchi\n" +
+                    "   Pomeriggio: Rilassarsi in una sorgente termale a Hakone\n" +
+                    "   Sera: Cena tradizionale giapponese kaiseki\n" +
+                    "Giorno 4:\n" +
+                    "   Mattina: Visita al tempio di Senso-ji nel quartiere di Asakusa\n" +
+                    "   Pomeriggio: Crociera sulla baia di Tokyo\n" +
+                    "   Sera: Esplorazione del quartiere di Akihabara per la cultura otaku\n" +
+                    "Giorno 5:\n" +
+                    "   Mattina: Visita al Museo Nazionale di Tokyo\n" +
+                    "   Pomeriggio: Passeggiata nel parco Ueno\n" +
+                    "   Sera: Cena di yakiniku (barbecue giapponese)\n" +
+                    "Giorno 6:\n" +
+                    "   Mattina: Escursione a Nikko per visitare il Santuario di Toshogu\n" +
+                    "   Pomeriggio: Ammirare le scimmie di Jigokudani Onsen\n" +
+                    "   Sera: Rilassarsi in una sorgente termale tradizionale giapponese\n" +
+                    "Giorno 7:\n" +
+                    "   Mattina: Ultimo giorno per fare shopping a Shibuya\n" +
+                    "   Pomeriggio: Trasferimento in aeroporto e partenza\n" +
+                    "   Sera: Arrivo a casa e fine del viaggio";
+
+            Destination destination5 = new Destination("Tokyo", itinerary5, "https://i.imgur.com/4qOoNff.jpeg");
+            destinationRepository.save(destination5);
+
+            String itinerary6 = "Giorno 1:\n" +
+                    "   Mattina: Visita alla Table Mountain\n" +
+                    "   Pomeriggio: Esplorazione del Victoria & Alfred Waterfront\n" +
+                    "   Sera: Cena con vista sull'oceano\n" +
+                    "Giorno 2:\n" +
+                    "   Mattina: Tour della Peninsula del Capo\n" +
+                    "   Pomeriggio: Visita alla Riserva Naturale di Cape Point\n" +
+                    "   Sera: Sunset cocktail a Camps Bay\n" +
+                    "Giorno 3:\n" +
+                    "   Mattina: Escursione in elicottero sopra la città\n" +
+                    "   Pomeriggio: Tour delle cantine di Stellenbosch\n" +
+                    "   Sera: Cena gourmet in un ristorante di lusso\n" +
+                    "Giorno 4:\n" +
+                    "   Mattina: Avvistamento di balene a Hermanus\n" +
+                    "   Pomeriggio: Visita alla spiaggia di Boulders Bay con pinguini\n" +
+                    "   Sera: Cena tradizionale sudafricana\n" +
+                    "Giorno 5:\n" +
+                    "   Mattina: Escursione in safari nel Parco Nazionale Kruger\n" +
+                    "   Pomeriggio: Avvistamento dei Big Five\n" +
+                    "   Sera: Cena sotto le stelle nella riserva di caccia\n" +
+                    "Giorno 6:\n" +
+                    "   Mattina: Tour della Township di Langa\n" +
+                    "   Pomeriggio: Esplorazione del Kirstenbosch National Botanical Garden\n" +
+                    "   Sera: Serata di musica dal vivo in un locale\n" +
+                    "Giorno 7:\n" +
+                    "   Mattina: Ultima mattinata in spiaggia a Clifton\n" +
+                    "   Pomeriggio: Trasferimento in aeroporto e partenza\n" +
+                    "   Sera: Arrivo a casa e fine del viaggio";
+
+            Destination destination6 = new Destination("Città del Capo, Sudafrica", itinerary6, "https://i.imgur.com/zCT0TVy.jpeg");
+            destinationRepository.save(destination6);
+
+            String itinerary7 = "Giorno 1:\n" +
+                    "   Mattina: Visita al tempio di Tanah Lot\n" +
+                    "   Pomeriggio: Relax in una delle spiagge di Bali\n" +
+                    "   Sera: Cena di pesce fresco alla griglia sulla spiaggia\n" +
+                    "Giorno 2:\n" +
+                    "   Mattina: Escursione alle Cascate di Tegenungan\n" +
+                    "   Pomeriggio: Esplorazione dei campi di riso di Ubud\n" +
+                    "   Sera: Spettacolo tradizionale di danza balinese\n" +
+                    "Giorno 3:\n" +
+                    "   Mattina: Escursione al Monte Batur per il trekking al sorgere del sole\n" +
+                    "   Pomeriggio: Relax nelle acque termali di Toya Devasya\n" +
+                    "   Sera: Cena in un ristorante panoramico con vista sul vulcano\n" +
+                    "Giorno 4:\n" +
+                    "   Mattina: Snorkeling nelle acque cristalline di Nusa Lembongan\n" +
+                    "   Pomeriggio: Esplorazione delle grotte di Goa Gajah\n" +
+                    "   Sera: Cena di specialità indonesiane\n" +
+                    "Giorno 5:\n" +
+                    "   Mattina: Visita al tempio di Uluwatu e al suo spettacolare tramonto\n" +
+                    "   Pomeriggio: Surf sulle onde di Kuta Beach\n" +
+                    "   Sera: Cena di pesce al Jimbaran Bay Beach Club\n" +
+                    "Giorno 6:\n" +
+                    "   Mattina: Escursione alla riserva naturale di Bali Barat\n" +
+                    "   Pomeriggio: Snorkeling e nuotate nel Parco Nazionale di Menjangan\n" +
+                    "   Sera: Cena romantica in una villa privata\n" +
+                    "Giorno 7:\n" +
+                    "   Mattina: Ultima mattinata per fare shopping a Seminyak\n" +
+                    "   Pomeriggio: Trasferimento in aeroporto e partenza\n" +
+                    "   Sera: Arrivo a casa e fine del viaggio";
+
+            Destination destination7 = new Destination("Bali, Indonesia", itinerary7, "https://i.imgur.com/rVIS9bv.jpeg");
+            destinationRepository.save(destination7);
+
         }
     }
 }
