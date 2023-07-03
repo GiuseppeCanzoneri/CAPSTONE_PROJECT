@@ -1,7 +1,10 @@
 package Giuseppecanzoneri.capstoneproject.Users.controller;
 
 import Giuseppecanzoneri.capstoneproject.Destination.Destination;
+import Giuseppecanzoneri.capstoneproject.Destination.service.DestinationService;
+import Giuseppecanzoneri.capstoneproject.Users.payload.AggiungiPreferitiPayload;
 import Giuseppecanzoneri.capstoneproject.Users.repository.UserRepository;
+import Giuseppecanzoneri.capstoneproject.exceptions.BadRequestException;
 import Giuseppecanzoneri.capstoneproject.exceptions.NotFoundException;
 import Giuseppecanzoneri.capstoneproject.Users.User;
 import Giuseppecanzoneri.capstoneproject.Users.payload.UserRegistrationPayload;
@@ -35,6 +38,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    DestinationService destinationService;
 
     @Autowired
   UserRepository userRepository;
@@ -78,44 +84,44 @@ public class UserController {
         return userService.findUserByUsername(username);
     }
 
-//    @GetMapping("/me/preferiti")
-//    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-//    public List<Destination> getPreferiti() {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//        return UserService.findUserByUsername(username).getPreferiti();
-//    }
-//
-//    @PostMapping("/me/preferiti")
-//    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public User addFilmToPreferiti(@RequestBody AggiungiPreferitiPayload payload) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//        User user = usersService.findByUsername(username);
-//
-//        Film film = filmsService.findById(payload.getIdFilm());
-//
-//        if (user.getPreferiti().contains(film)) {
-//            throw new BadRequestException("Non puoi aggiungere lo stesso film due volte!");
-//        }
-//
-//        user.addFilm(film);
-//        return usersRepo.save(user);
-//    }
-//
-//    @DeleteMapping("/me/preferiti/{filmId}")
-//    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    public User removeFilmFromPreferiti(@PathVariable UUID filmId) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String username = authentication.getName();
-//        User user = UserService.findUserByUsername(username);
-//
-//        Destination destination = UserService.findUserById(filmId);
-//
-//        user.removeDestination(destination);
-//        return usersRepo.save(user);
-//    }
+    @GetMapping("/me/preferiti")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    public List<Destination> getPreferiti() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return userService.findUserByUsername(username).getPreferiti();
+    }
+
+    @PostMapping("/me/preferiti")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @ResponseStatus(HttpStatus.CREATED)
+    public User addDestinationToPreferiti(@RequestBody AggiungiPreferitiPayload payload) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.findUserByUsername(username);
+
+        Destination destination = destinationService.findById(payload.getIdDestination());
+
+        if (user.getPreferiti().contains(destination)) {
+            throw new BadRequestException("Non puoi aggiungere la stessa destinazione due volte!");
+        }
+
+        user.addDestination(destination);
+        return userRepository.save(user);
+    }
+
+    @DeleteMapping("/me/preferiti/{destinationId}")
+    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public User removeDestinationFromPreferiti(@PathVariable UUID destinationId) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userService.findUserByUsername(username);
+
+        Destination destination = destinationService.findById(destinationId);
+
+        user.removeDestination(destination);
+        return userRepository.save(user);
+    }
 
 }
