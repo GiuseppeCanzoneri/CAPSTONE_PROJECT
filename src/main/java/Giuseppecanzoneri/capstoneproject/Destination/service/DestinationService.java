@@ -23,14 +23,14 @@ public class DestinationService {
     @Autowired
     private DestinationRepository destinationRepo;
 
-    public Page<Destination> find(int page, int size, String sortBy, String nome) {
+    public Page<Destination> find(int page, int size, String sortBy, String name) {
         if (size < 0)
             size = 10;
         if (size > 100)
             size = 100;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
-        if (!nome.equals("")) {
-            return destinationRepo.findByNome(nome, pageable);
+        if (!name.equals("")) {
+            return destinationRepo.findByName(name, pageable);
         } else {
             return destinationRepo.findAll(pageable);
         }
@@ -49,7 +49,7 @@ public class DestinationService {
 
     public Destination findByIdAndUpdate(UUID id, DestinationCreatePayload d) {
         Destination found = this.findById(id);
-        found.setDestinationId(id);
+        found.setId(id);
         found.setName(d.getName());
         found.setDescription(found.getDescription());
         found.setUrlCopertina(d.getUrlCopertina());;
