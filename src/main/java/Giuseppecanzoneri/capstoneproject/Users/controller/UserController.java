@@ -78,7 +78,6 @@ public class UserController {
         return userService.findUserByUsername(username);
     }
 
-
 //    @GetMapping("/me/preferiti")
 //    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 //    public List<Destination> getPreferiti() {
@@ -86,7 +85,7 @@ public class UserController {
 //        String username = authentication.getName();
 //        return UserService.findUserByUsername(username).getPreferiti();
 //    }
-
+//
 //    @PostMapping("/me/preferiti")
 //    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 //    @ResponseStatus(HttpStatus.CREATED)
@@ -104,7 +103,7 @@ public class UserController {
 //        user.addFilm(film);
 //        return usersRepo.save(user);
 //    }
-
+//
 //    @DeleteMapping("/me/preferiti/{filmId}")
 //    @PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 //    @ResponseStatus(HttpStatus.NO_CONTENT)

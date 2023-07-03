@@ -118,7 +118,7 @@ public class DestinationRunner implements CommandLineRunner {
                     "   Pomeriggio: Esplorazione di Belleville e del Parc des Buttes-Chaumont\n" +
                     "   Sera: Spettacolo di luce al Grand Palais";
 
-            Destination destination2 = new Destination("Parigi", itinerary2, "https://i.imgur.com/V8SDnRV.jpeg");
+            Destination destination2 = new Destination("Parigi", itinerary2, "https://i.imgur.com/KRj8mSz.jpeg");
             destinationRepository.save(destination2);
 
 
