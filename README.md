@@ -24,5 +24,6 @@ https://github.com/GiuseppeCanzoneri/CAPSTONE-FRONTEND-Travel-Planner
 
 # Contattaci
 Se hai domande, suggerimenti o feedback riguardo a TravelPlanner , non esitare a contattarci:
+-📧 Email: gcanzoneri3@gmail.com -👥 LinkedIn: www.linkedin.com/in/giuseppe-canzoneri-94828b270 -🐙 GitHub: https://github.com/GiuseppeCanzoneri
 
 
