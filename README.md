@@ -23,6 +23,6 @@ https://github.com/GiuseppeCanzoneri/CAPSTONE-FRONTEND-Travel-Planner
 
 
 # Contattaci
-Se hai domande, suggerimenti o feedback riguardo a FilmVerse, non esitare a contattarci:
+Se hai domande, suggerimenti o feedback riguardo a TravelPlanner , non esitare a contattarci:
 
 
